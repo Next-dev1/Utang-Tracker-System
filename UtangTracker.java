@@ -1,10 +1,6 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UtangTracker{
@@ -14,7 +10,7 @@ public class UtangTracker{
         String choice;
         System.out.print("PRESS B TO GO BACK TO MENU: ");
         choice = input.nextLine();
-        
+                
         if(choice.equalsIgnoreCase("B")){
             return;
         }
@@ -60,7 +56,6 @@ public class UtangTracker{
             userChoice = user.nextInt(); //for picking options for the system's features
             System.out.println("-------------------------------------------------------------------------------");
 
-            
             switch (userChoice){ //here, puro mga tawag nalang ng classes to
                 case 1:
                     CreateList createList = new CreateList();
@@ -70,9 +65,9 @@ public class UtangTracker{
                     break;
 
                 case 2:
-                    Adding adding = new Adding();
-
-                    adding.addToList();
+                    AddList addList = new AddList();
+                    
+                    addList.adding();
                     menu();
                     break;
 
@@ -94,8 +89,7 @@ public class UtangTracker{
                     System.out.println("                                Program exited");
                     System.out.println("===============================================================================");
                     break;
-            }
-            
+            }          
         }
         while(userChoice != 5);
     }

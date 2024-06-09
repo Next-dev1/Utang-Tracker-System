@@ -218,7 +218,7 @@ public class CreateList{
                     totalAmountDueList.clear();
                 }
                 else if(confirm.equalsIgnoreCase("yes")){
-                    BufferedWriter bw = new BufferedWriter(new FileWriter("UtangList.txt", true));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("SukiNames.txt", true));
                     
                     LocalDate dateListed = LocalDate.now();
                     LocalTime timeListed = LocalTime.now();
@@ -230,10 +230,14 @@ public class CreateList{
                     String finalDateListed = dateListed.format(formatter2);
                     
                     enterDetails();
-                    bw.append(" ");
-                    bw.newLine();
-                    bw.append(getSukiName() + "1");
-                    bw.newLine();
+                    String one = getSukiName();
+                    String two = ".txt";
+                    String fileName = one + two;
+                    
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+                    writer.append("SUKI NAME: " + getSukiName());
+                    writer.newLine();
+                    writer.close();
                     bw.append("SUKI NAME: " + getSukiName());
                     bw.newLine();
                     bw.append("SELLER NAME: " + getSellerName());
@@ -255,22 +259,16 @@ public class CreateList{
                     bw.append("Total price for this item: " + totalPriceList.get(i));
                     bw.newLine();
                     }
-
-                    bw.newLine();
-                    bw.append(getSukiName() + "2");
+                    bw.append(" ");
                     bw.newLine();
                     bw.append("TOTAL AMOUNT DUE: " + totalAmountDueList.get(0));
                     bw.newLine();
-                    
-                    bw.append(getSukiName() + "3");
-                    bw.newLine();
-                    bw.append(" ");
                     bw.close();
                     System.out.println("-------------------------------------------------------------------------------");
                     System.out.println("                           Debt successfully listed!");
                     System.out.println("===============================================================================");
                     break;
-                    }
+                }
             }
         }
     }

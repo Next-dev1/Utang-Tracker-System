@@ -12,10 +12,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Adding {
-    private final ArrayList<String> entireList = new ArrayList<>();
-    private final ArrayList<String> oldList = new ArrayList<>();
-    private final ArrayList<Double> oldDueList = new ArrayList<>();
+public class AddList{
+    private final ArrayList<Double> oldTotal = new ArrayList<>();
     private final ArrayList<String> realItem = new ArrayList<>();
     private final ArrayList<Double> itemPrice = new ArrayList<>();
     private final ArrayList<String> fullLine = new ArrayList<>();
@@ -25,65 +23,36 @@ public class Adding {
     private final ArrayList<Double> totalPriceList = new ArrayList<>();
     private final ArrayList<Double> totalAmountDueList = new ArrayList<>();
     
-    public void addToList() throws FileNotFoundException, IOException {
+    public void adding() throws FileNotFoundException, IOException{
         Scanner user = new Scanner(System.in);
-        BufferedReader br = new BufferedReader(new FileReader("UtangList.txt"));
         SukiList sukiList = new SukiList();
-
+        
         sukiList.sukiList();
-
+        
         String sukiName;
-
+        String ext = ".txt";
+        System.out.println("-------------------------------------------------------------------------------");
         System.out.print("Enter suki name: ");
         sukiName = user.nextLine();
         System.out.println("");
-
-        String divider1 = sukiName + "1";
-        String divider2 = sukiName + "2";
-        String divider3 = sukiName + "3";
-
+        
+        String fileName = sukiName + ext;
+        
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        
         String oldDue = "TOTAL AMOUNT DUE: ";
         String line;
-
-        boolean getOldList = false;
-
-        while ((line = br.readLine()) != null) {
-            if (line.contains(divider1)) {
-                getOldList = true;
-                continue;
-            }
-            if (getOldList) {
-                if (line.contains(divider2)) {
-                    break;
-                }
-                oldList.add(line);
-            }
-            if (line.contains(oldDue)) {
-                oldDueList.add(Double.valueOf(line.substring(oldDue.length()).trim()));
+        
+        while((line = br.readLine()) != null){
+            if(line.contains(oldDue)){
+                oldTotal.add(Double.valueOf(line.substring(oldDue.length()).trim()));
             }
         }
-
-        boolean getAll = false;
-
-        while ((line = br.readLine()) != null) {
-            if (line.contains(divider1)) {
-                getAll = true;
-                continue;
-            }
-            if (line.contains(divider3)) {
-                getAll = false;
-                continue;
-            }
-            if (getAll) {
-                continue;
-            }
-            entireList.add(line);
-        }
-
-        while (true) {
+        
+        while(true){
             Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?", Pattern.CASE_INSENSITIVE);
             BufferedReader br2 = new BufferedReader(new FileReader("ItemsList.txt"));
-
+            
             String line2;
             boolean finish = false;
             String itemName;
@@ -95,7 +64,7 @@ public class Adding {
             System.out.print("Enter item name: ");
             itemName = user.nextLine();
             System.out.println(" ");
-
+            
             while ((line2 = br2.readLine()) != null && !finish) {
                 if (line2.contains(itemName)) {
                     fullLine.add(line2);
@@ -116,7 +85,6 @@ public class Adding {
                     }
                 }
             }
-
             System.out.print("Item name: ");
             for (String name : realItem) {
                 System.out.println(name);
@@ -139,20 +107,21 @@ public class Adding {
             user.nextLine();
             System.out.println(" ");
             quantityList.add(itemQuantity);
-
+            
             totalPrice *= itemQuantity;
 
             System.out.println("Total price for this item: " + totalPrice + " PHP");
             System.out.println(" ");
             totalPriceList.add(totalPrice);
-
+            
+            System.out.println("-------------------------------------------------------------------------------");
             String choice;
             System.out.print("Press the ENTER key to continue listing or type 'DONE' to finish listing");
             choice = user.nextLine();
-
+            System.out.println("-------------------------------------------------------------------------------");
+            
             if (choice.equalsIgnoreCase("done")) {
                 for (int i = 0; i < itemList.size(); i++) {
-                    System.out.println(" ");
                     System.out.println("Item name: " + itemList.get(i));
                     System.out.println("Item price: " + priceList.get(i));
                     System.out.println("Item quantity: " + quantityList.get(i));
@@ -167,13 +136,14 @@ public class Adding {
                 }
                 System.out.println("TOTAL AMOUNT DUE: " + totalAmountDue + " PHP");
                 totalAmountDueList.add(totalAmountDue);
-
+                System.out.println("-------------------------------------------------------------------------------");
+                
                 String confirm;
 
-                System.out.println(" ");
+                System.out.println("-------------------------------------------------------------------------------");
                 System.out.print("Are the listed items correct? (YES/NO): ");
                 confirm = user.nextLine();
-                System.out.println(" ");
+                System.out.println("-------------------------------------------------------------------------------");
 
                 if (confirm.equalsIgnoreCase("no")) {
                     itemList.clear();
@@ -181,74 +151,59 @@ public class Adding {
                     quantityList.clear();
                     totalPriceList.clear();
                     totalAmountDueList.clear();
-                } else if (confirm.equalsIgnoreCase("yes")) {
-                    BufferedWriter bw = new BufferedWriter(new FileWriter("UtangList.txt"));
-                   
-                    bw.write(divider1);
-                    bw.newLine();
-                    for (String old : oldList) {
-                        bw.write(old);
-                        bw.newLine();
-                    }
+                }
+                else if(confirm.equalsIgnoreCase("yes")){
+                    CreateList createList = new CreateList();
+                    
                     LocalDate dateListed = LocalDate.now();
                     LocalTime timeListed = LocalTime.now();
-
+                    
                     DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("EEEE, MM/dd/yyyy");
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-
+                    
                     String finalTimeListed = timeListed.format(formatter);
                     String finalDateListed = dateListed.format(formatter2);
-
+                    System.out.println("-------------------------------------------------------------------------------");
                     String sellerName;
-
                     System.out.print("Enter seller name: ");
                     sellerName = user.nextLine();
                     System.out.println(" ");
-
+                    System.out.println("-------------------------------------------------------------------------------");
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
+                    bw.append(" ");
                     bw.newLine();
-                    bw.write("SELLER NAME: " + sellerName);
+                    bw.append("SELLER NAME: " + sellerName);
                     bw.newLine();
-                    bw.write("DATE LISTED: " + finalDateListed);
+                    bw.append("DATE LISTED: " + finalDateListed);
                     bw.newLine();
-                    bw.write("TIME LISTED: " + finalTimeListed);
+                    bw.append("TIME LISTED: " + finalTimeListed);
                     bw.newLine();
-                    bw.write(" ");
+                    bw.append(" ");
                     bw.newLine();
-
-                    for (int i = 0; i < itemList.size(); i++) {
-                        bw.write("Item name: " + itemList.get(i));
-                        bw.newLine();
-                        bw.write("Item price: " + priceList.get(i));
-                        bw.newLine();
-                        bw.write("Item quantity: " + quantityList.get(i));
-                        bw.newLine();
-                        bw.write("Total price for this item: " + totalPriceList.get(i));
-                        bw.newLine();
-                        bw.write("");
-                        bw.newLine();
+             
+                    for(int i = 0; i < itemList.size(); i++){ //prints the item and its details together sa file na
+                    bw.append("Item name: " + itemList.get(i));
+                    bw.newLine();
+                    bw.append("Item price: " + priceList.get(i));
+                    bw.newLine();
+                    bw.append("Item quantity: " + quantityList.get(i));
+                    bw.newLine();
+                    bw.append("Total price for this item: " + totalPriceList.get(i));
+                    bw.newLine();
                     }
                     
-                    double sum = totalAmountDueList.get(0) + oldDueList.get(0);
-                    bw.write(" ");
+                    double sum = totalAmountDueList.get(0) + oldTotal.get(0);
+                    bw.append(" ");
                     bw.newLine();
-                    bw.write(divider2);
+                    bw.append("TOTAL AMOUNT DUE: " + sum);
                     bw.newLine();
-                    bw.write("TOTAL AMOUNT DUE: " + sum);
-                    bw.newLine();
-                    bw.write(divider3);
-                    bw.newLine();
-
-                    for (String all : entireList) {
-                        bw.write(all);
-                        bw.newLine();
-                    }
                     bw.close();
-
-                    System.out.println(" ");
-                    System.out.println("Items successfully added!");
+                    System.out.println("-------------------------------------------------------------------------------");
+                    System.out.println("                      Debt successfully listed to " + sukiName);
+                    System.out.println("===============================================================================");
                     break;
                 }
             }
-        }
+        }    
     }
 }

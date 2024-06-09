@@ -11,7 +11,7 @@ public class SukiList{
         
         Scanner user = new Scanner(System.in);
         
-        BufferedReader br = new BufferedReader(new FileReader("UtangList.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("SukiNames.txt"));
         
         String keyword = "SUKI NAME:";
         String line;
