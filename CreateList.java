@@ -60,7 +60,9 @@ public class CreateList{
     }
     public void enterDetails(){
         Scanner user = new Scanner(System.in);
-        
+
+        System.out.println("ex* [Sean, Mandayo] ");
+
         System.out.print("Enter suki name: ");
         sukiName = user.nextLine();
         System.out.print("Enter seller name: ");
@@ -248,7 +250,7 @@ public class CreateList{
                     bw.newLine();
                     bw.append(" ");
                     bw.newLine();
-             
+                    
                     for(int i = 0; i < itemList.size(); i++){ //prints the item and its details together sa file na
                     bw.append("Item name: " + itemList.get(i));
                     bw.newLine();

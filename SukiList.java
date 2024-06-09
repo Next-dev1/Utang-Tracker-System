@@ -23,16 +23,16 @@ public class SukiList{
             lineNumber++;
             
             if(line.contains(keyword)){
-               String nameSuki = line.substring(keyword.length());
-               names.add(nameSuki.trim());
+                String nameSuki = line.substring(keyword.length());
+                names.add(nameSuki.trim());
             }
         }
         ArrayList<String[]> splitList = new ArrayList<>();
-               
+                
             for (String sukiName : names){
                 String[] splitArray = sukiName.split("\n");
                 splitList.add(splitArray);
-                   
+                    
             }
             int index = 1;
             

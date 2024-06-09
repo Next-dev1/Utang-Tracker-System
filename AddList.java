@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AddList{
-    private final ArrayList<Double> oldTotal = new ArrayList<>();
+    private final ArrayList<Double> lastDue = new ArrayList<>();
     private final ArrayList<String> realItem = new ArrayList<>();
     private final ArrayList<Double> itemPrice = new ArrayList<>();
     private final ArrayList<String> fullLine = new ArrayList<>();
@@ -40,14 +40,19 @@ public class AddList{
         
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         
-        String oldDue = "TOTAL AMOUNT DUE: ";
+        String latestDue = "TOTAL AMOUNT DUE: ";
         String line;
+        String lines = null;
         
         while((line = br.readLine()) != null){
-            if(line.contains(oldDue)){
-                oldTotal.add(Double.valueOf(line.substring(oldDue.length()).trim()));
+            if(line.contains(latestDue)){
+                lines = line;
+            }
+            if(lines != null){
+            lastDue.add(Double.valueOf(lines.substring(latestDue.length()).trim()));
             }
         }
+        
         
         while(true){
             Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?", Pattern.CASE_INSENSITIVE);
@@ -116,7 +121,7 @@ public class AddList{
             
             System.out.println("-------------------------------------------------------------------------------");
             String choice;
-            System.out.print("Press the ENTER key to continue listing or type 'DONE' to finish listing");
+            System.out.print("Press the ENTER key to continue listing or type 'DONE' to finish listing: ");
             choice = user.nextLine();
             System.out.println("-------------------------------------------------------------------------------");
             
@@ -140,7 +145,6 @@ public class AddList{
                 
                 String confirm;
 
-                System.out.println("-------------------------------------------------------------------------------");
                 System.out.print("Are the listed items correct? (YES/NO): ");
                 confirm = user.nextLine();
                 System.out.println("-------------------------------------------------------------------------------");
@@ -163,12 +167,11 @@ public class AddList{
                     
                     String finalTimeListed = timeListed.format(formatter);
                     String finalDateListed = dateListed.format(formatter2);
-                    System.out.println("-------------------------------------------------------------------------------");
+                    
                     String sellerName;
                     System.out.print("Enter seller name: ");
                     sellerName = user.nextLine();
                     System.out.println(" ");
-                    System.out.println("-------------------------------------------------------------------------------");
                     BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
                     bw.append(" ");
                     bw.newLine();
@@ -180,7 +183,7 @@ public class AddList{
                     bw.newLine();
                     bw.append(" ");
                     bw.newLine();
-             
+                    
                     for(int i = 0; i < itemList.size(); i++){ //prints the item and its details together sa file na
                     bw.append("Item name: " + itemList.get(i));
                     bw.newLine();
@@ -192,10 +195,10 @@ public class AddList{
                     bw.newLine();
                     }
                     
-                    double sum = totalAmountDueList.get(0) + oldTotal.get(0);
+                    double total = totalAmountDueList.get(0) + lastDue.get(0);
                     bw.append(" ");
                     bw.newLine();
-                    bw.append("TOTAL AMOUNT DUE: " + sum);
+                    bw.append("TOTAL AMOUNT DUE: " + total);
                     bw.newLine();
                     bw.close();
                     System.out.println("-------------------------------------------------------------------------------");
