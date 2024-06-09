@@ -17,8 +17,7 @@ public class SukiPayment{
         
     viewList.viewList();
     String fileName = viewList.getFileName();
-    File file = new File(fileName);
-    
+
     double payment;
         while(true){
             System.out.print("Enter amount to pay: ");
@@ -33,11 +32,12 @@ public class SukiPayment{
             confirm = user.nextLine();
             
             if(confirm.equalsIgnoreCase("no")){
-                continue;
+                
             }
             else if(confirm.equalsIgnoreCase("yes")){
                 BufferedReader br = new BufferedReader(new FileReader(fileName));
                 BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
+                
                 String keyword = "TOTAL AMOUNT DUE: ";
                 String line;
                 
@@ -50,9 +50,11 @@ public class SukiPayment{
                 double newBalance = due.get(0) - pay.get(0);
                 
                 if(newBalance == 0){
+                    File file = new File(fileName);
                     System.out.println("REMAINING BALANCE: " + newBalance + " PHP");
                     br.close();
                     file.delete();
+                    break;
                 }
                 else{
                     System.out.println("REMAINING BALANCE: " + newBalance + " PHP");
@@ -62,9 +64,9 @@ public class SukiPayment{
                     bw.append("TOTAL AMOUNT DUE: " + newBalance);
                     bw.newLine();
                     bw.close();
+                    break;
                 }
             }
-            break;
         }
 
     }

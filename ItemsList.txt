@@ -1,0 +1,8 @@
+13.00 coke sakto
+20.00 coke mismo
+30.00 coke kasalo
+80.00 coke 1.5L
+13.00 royal sakto
+20.00 royal mismo
+30.00 royal kasalo
+80.00 royal 1.5L
