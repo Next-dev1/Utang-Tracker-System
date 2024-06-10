@@ -61,12 +61,12 @@ public class CreateList{
     public void enterDetails(){
         Scanner user = new Scanner(System.in);
 
-        System.out.println("ex* [Sean, Mandayo] ");
+        System.out.println("ex* [Sean Mandayo] ");
 
         System.out.print("Enter suki name: ");
-        sukiName = user.nextLine();
+        sukiName = user.nextLine().toUpperCase();
         System.out.print("Enter seller name: ");
-        sellerName = user.nextLine();    
+        sellerName = user.nextLine().toUpperCase();    
     }
     //itong method na to is para mabasa yung item na ililista and compare sa file
     public void enterItem() throws FileNotFoundException, IOException{

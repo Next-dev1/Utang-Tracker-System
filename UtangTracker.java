@@ -89,11 +89,6 @@ public class UtangTracker {
                     System.out.println("                                Program exited");
                     System.out.println("===============================================================================");
                     break;
-
-                default:
-                    System.out.println("Invalid choice.");
-                    menu();
-                    break;
             }
         } while (!userChoice.equals("5")); // Check for string equality
     }

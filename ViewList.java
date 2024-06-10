@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ViewList {
-    private ArrayList<String> list = new ArrayList<>();
-    private ArrayList<String> latestDue = new ArrayList<>();
+    private final ArrayList<String> list = new ArrayList<>();
+    private final ArrayList<String> latestDue = new ArrayList<>();
     private String sukiName;
     private String fileName;
 

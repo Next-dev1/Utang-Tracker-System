@@ -51,8 +51,8 @@ public class SukiPayment {
 
             while (!validInput) {
                 System.out.println("Is the entered amount correct? (YES/NO): ");
-                System.out.println("-------------------------------------------------------------------------------");
                 confirm = user.nextLine().trim();
+                System.out.println("-------------------------------------------------------------------------------");
 
                 if (confirm.equalsIgnoreCase("no")) {
                     validInput = true;
@@ -83,13 +83,13 @@ public class SukiPayment {
 
                     double newBalance = lastDue.get(0) - pay.get(0);
 
-                    if (newBalance == 0.0) {
+                    if (newBalance == 0.0 ) {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
                         System.out.println("REMAINING BALANCE: " + newBalance + " PHP");
                         System.out.println("-------------------------------------------------------------------------------");
                         writer.close();
                         break;
-                    } else {
+                    } else if(newBalance > 0){
                         BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
                         System.out.println("REMAINING BALANCE: " + newBalance + " PHP");
                         System.out.println("-------------------------------------------------------------------------------");
@@ -105,7 +105,7 @@ public class SukiPayment {
                 }
             }
 
-            if (validInput && pay.size() > 0) {
+            if (validInput && !pay.isEmpty()) {
                 break; // Exit the loop if a valid payment has been confirmed and processed
             }
         }
